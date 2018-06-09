@@ -1,0 +1,23 @@
+{
+  "name": "gas-interface-plain",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/osnth01/gas-interface-plain.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/osnth01/gas-interface-plain/issues"
+  },
+  "homepage": "https://github.com/osnth01/gas-interface-plain#readme",
+  "dependencies": {
+    "rxjs": "^5.5.0"
+  }
+}
