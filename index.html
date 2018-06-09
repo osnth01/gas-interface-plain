@@ -9,19 +9,73 @@
 			margin: 0px;
 		}
 
-		#app {
+		*, *:before, *:after {
+			box-sizing: border-box;
+		}
+
+		.content {
+			width: 75%;
+			margin: 0 auto;
+			font-family: sans-serif;
+		}
+
+
+
+
+		.container {
+			margin: 20px;
+		}
+
+		.solid-border {
 			border: 1px solid black;
 		}
+
+		.dashed-border {
+			border: 1px dashed gray;
+		}
+
+		.header {
+			text-align: center;
+		}
+
 	</style>
 </head>
 <body>
-	<div id="app">
-		Gas
+	<div class="content">
+
+
+		<div class="container header">
+			<h1>Gas Interface</h1>
+		</div>
+
+		<div class="container solid-border">
+			<div class="container solid-border">
+				<div class="container interface">
+					<button id="button">Click Me</button>
+				</div>
+			</div>
+
+			<div class="container dashed-border">
+				<div class="container state">
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<script src="node_modules/rxjs/bundles/Rx.js"></script>
 	<script>
-		console.log(Rx)
+		var state = {};
+
+		var stateDOM = document.querySelector('.state');
+		stateDOM.innerHTML = "State: " + JSON.stringify(state);
+
+		var clickMeButton = document.getElementById('button');
+
+		var clickButton = Rx.Observable.fromEvent(clickMeButton, 'click')
+		clickButton.subscribe(function() {
+			console.log('hello!');
+		});
+
 	</script>
 </body>
 </html>
