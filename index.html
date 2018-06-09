@@ -19,9 +19,6 @@
 			font-family: sans-serif;
 		}
 
-
-
-
 		.container {
 			margin: 20px;
 		}
@@ -51,12 +48,14 @@
 		<div class="container solid-border">
 			<div class="container solid-border">
 				<div class="container interface">
-					<button id="button">Click Me</button>
-				</div>
-			</div>
-
-			<div class="container dashed-border">
-				<div class="container state">
+					<div class="container">
+						<span class="gas-selection">No Selection</span>
+					</div>
+					<div class="container">
+						<button class="button" id="unleaded">Unleaded</button>
+						<button class="button" id="plus">Plus</button>
+						<button class="button" id="premium">Premium</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -64,18 +63,41 @@
 
 	<script src="node_modules/rxjs/bundles/Rx.js"></script>
 	<script>
-		var state = {};
+		var unleadedButton = document.getElementById('unleaded');
+		var plusButton = document.getElementById('plus');
+		var premiumButton = document.getElementById('premium');
 
-		var stateDOM = document.querySelector('.state');
-		stateDOM.innerHTML = "State: " + JSON.stringify(state);
+		var unleadedButtonClick$ = Rx.Observable.fromEvent(unleadedButton, 'click').mapTo('Unleaded')
+		var plusButtonClick$ = Rx.Observable.fromEvent(plusButton, 'click').mapTo('Plus')
+		var premiumButtonClick$ = Rx.Observable.fromEvent(premiumButton, 'click').mapTo('Premium')
 
-		var clickMeButton = document.getElementById('button');
+		function clicked(gasType) {
+			var clicked = document.querySelector('.gas-selection');
+			clicked.innerHTML = gasType;
+		}
 
-		var clickButton = Rx.Observable.fromEvent(clickMeButton, 'click')
-		clickButton.subscribe(function() {
-			console.log('hello!');
-		});
-
+		unleadedButtonClick$.subscribe(clicked);
+		plusButtonClick$.subscribe(clicked);
+		premiumButtonClick$.subscribe(clicked);
 	</script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
