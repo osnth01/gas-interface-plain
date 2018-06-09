@@ -23,6 +23,11 @@
 			margin: 20px;
 		}
 
+		.collapse {
+			margin-left: 0px;
+			margin-right: 0px;
+		}
+
 		.solid-border {
 			border: 1px solid black;
 		}
@@ -49,7 +54,17 @@
 			<div class="container solid-border">
 				<div class="container interface">
 					<div class="container">
-						<span class="gas-selection">No Selection</span>
+						<div class="container collapse">
+							Gas Type:
+							<span class="gas-selection">No Selection</span>
+						</div>
+						<div class="container collapse">
+							Credit: $0.00
+						</div>
+					</div>
+					<div class="container">
+						Insert Money: <input type="number" class="money-input"></input>
+						<button class="button" id="money-button">Submit</button>
 					</div>
 					<div class="container">
 						<button class="button" id="unleaded">Unleaded</button>
@@ -67,18 +82,38 @@
 		var plusButton = document.getElementById('plus');
 		var premiumButton = document.getElementById('premium');
 
+		var gasSelectionButtons = [
+			unleadedButton,
+			plusButton,
+			premiumButton
+		];
+
 		var unleadedButtonClick$ = Rx.Observable.fromEvent(unleadedButton, 'click').mapTo('Unleaded')
 		var plusButtonClick$ = Rx.Observable.fromEvent(plusButton, 'click').mapTo('Plus')
 		var premiumButtonClick$ = Rx.Observable.fromEvent(premiumButton, 'click').mapTo('Premium')
 
-		function clicked(gasType) {
-			var clicked = document.querySelector('.gas-selection');
-			clicked.innerHTML = gasType;
+		function gasSelected(gasType) {
+			document.querySelector('.gas-selection').innerHTML = gasType;
 		}
 
-		unleadedButtonClick$.subscribe(clicked);
-		plusButtonClick$.subscribe(clicked);
-		premiumButtonClick$.subscribe(clicked);
+		unleadedButtonClick$.subscribe(gasSelected);
+		plusButtonClick$.subscribe(gasSelected);
+		premiumButtonClick$.subscribe(gasSelected);
+
+		var credit = new Rx.BehaviorSubject(0);
+
+		credit.subscribe(function(value) {
+			var disabled = value <= 0;
+
+			gasSelectionButtons.forEach(function(button) {
+				button.disabled = disabled;
+			});
+		});
+
+		var moneyInput = document.querySelector('.money-input');
+		var moneyButton = document.getElementById('money-button');
+		var moneyButtonClick$ = Rx.Observable.fromEvent(moneyButton, 'click').mapTo()
+
 	</script>
 </body>
 </html>
