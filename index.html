@@ -59,7 +59,8 @@
 							<span class="gas-selection">No Selection</span>
 						</div>
 						<div class="container collapse">
-							Credit: $0.00
+							Credit:
+							<span class="current-credit">$0.00</span>
 						</div>
 					</div>
 					<div class="container">
@@ -82,15 +83,15 @@
 		var plusButton = document.getElementById('plus');
 		var premiumButton = document.getElementById('premium');
 
+		var unleadedButtonClick$ = Rx.Observable.fromEvent(unleadedButton, 'click').mapTo('Unleaded')
+		var plusButtonClick$ = Rx.Observable.fromEvent(plusButton, 'click').mapTo('Plus')
+		var premiumButtonClick$ = Rx.Observable.fromEvent(premiumButton, 'click').mapTo('Premium')
+
 		var gasSelectionButtons = [
 			unleadedButton,
 			plusButton,
 			premiumButton
 		];
-
-		var unleadedButtonClick$ = Rx.Observable.fromEvent(unleadedButton, 'click').mapTo('Unleaded')
-		var plusButtonClick$ = Rx.Observable.fromEvent(plusButton, 'click').mapTo('Plus')
-		var premiumButtonClick$ = Rx.Observable.fromEvent(premiumButton, 'click').mapTo('Premium')
 
 		function gasSelected(gasType) {
 			document.querySelector('.gas-selection').innerHTML = gasType;
@@ -112,27 +113,22 @@
 
 		var moneyInput = document.querySelector('.money-input');
 		var moneyButton = document.getElementById('money-button');
-		var moneyButtonClick$ = Rx.Observable.fromEvent(moneyButton, 'click').mapTo()
+		var moneyButtonClick$ = Rx.Observable.fromEvent(moneyButton, 'click')
+			.mapTo(moneyInput.value)
 
+		moneyButtonClick$.subscribe(function(value) {
+			console.log(value);
+			credit.next(value);
+		});
+
+		var currentCredit = document.querySelector('.current-credit');
+		credit.subscribe(function(value) {
+			currentCredit.innerHTML = "$" + value + ".00";
+		});
+
+		var buttonExample = new Rx.Subject();
+
+		buttonExample.subscribe();
 	</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
